@@ -97,12 +97,12 @@ export default function WorkoutSession({ workout, onComplete, onExit }: WorkoutS
 
   if (!currentExercise) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4 flex items-center justify-center">
-        <Card className="w-full max-w-md">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 p-4 flex items-center justify-center transition-colors duration-300">
+        <Card className="w-full max-w-md border-border/50 shadow-xl">
           <CardContent className="p-8 text-center">
             <Check className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold mb-2">Workout Complete!</h2>
-            <p className="text-gray-600 mb-6">Great job finishing your {workout.name} session!</p>
+            <h2 className="text-2xl font-bold mb-2 text-foreground">Workout Complete!</h2>
+            <p className="text-muted-foreground mb-6">Great job finishing your {workout.name} session!</p>
             <Button onClick={() => onComplete(completedExercises)} className="w-full">
               Finish & Save Progress
             </Button>
@@ -113,10 +113,10 @@ export default function WorkoutSession({ workout, onComplete, onExit }: WorkoutS
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800 p-4 transition-colors duration-300">
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold">{workout.name}</h1>
+          <h1 className="text-2xl font-bold text-foreground">{workout.name}</h1>
           <Button variant="outline" onClick={onExit}>
             <X className="h-4 w-4 mr-2" />
             Exit
@@ -124,7 +124,7 @@ export default function WorkoutSession({ workout, onComplete, onExit }: WorkoutS
         </div>
 
         <div className="mb-6">
-          <div className="flex justify-between text-sm text-gray-600 mb-2">
+          <div className="flex justify-between text-sm text-muted-foreground mb-2">
             <span>
               Exercise {currentExerciseIndex + 1} of {workout.exercises.length}
             </span>
@@ -134,11 +134,11 @@ export default function WorkoutSession({ workout, onComplete, onExit }: WorkoutS
         </div>
 
         {isResting ? (
-          <Card className="mb-6">
+          <Card className="mb-6 border-border/50 shadow-lg">
             <CardContent className="p-8 text-center">
               <Timer className="h-16 w-16 text-blue-500 mx-auto mb-4" />
-              <h2 className="text-3xl font-bold mb-2">{formatTime(restTimer)}</h2>
-              <p className="text-gray-600 mb-6">Rest between sets</p>
+              <h2 className="text-3xl font-bold mb-2 text-foreground">{formatTime(restTimer)}</h2>
+              <p className="text-muted-foreground mb-6">Rest between sets</p>
               <div className="flex gap-4 justify-center">
                 <Button onClick={skipRest} variant="outline">
                   Skip Rest
@@ -154,45 +154,51 @@ export default function WorkoutSession({ workout, onComplete, onExit }: WorkoutS
             </CardContent>
           </Card>
         ) : (
-          <Card className="mb-6">
+          <Card className="mb-6 border-border/50 shadow-lg">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="text-xl">{currentExercise.name}</CardTitle>
-                <Badge variant="secondary">
+                <CardTitle className="text-xl text-foreground">{currentExercise.name}</CardTitle>
+                <Badge variant="secondary" className="bg-muted text-muted-foreground">
                   Set {currentSet} of {currentExercise.sets}
                 </Badge>
               </div>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-600">Target Reps</p>
-                  <p className="text-2xl font-bold">{currentExercise.reps}</p>
+                <div className="text-center p-4 bg-muted/50 rounded-lg border border-border/30">
+                  <p className="text-sm text-muted-foreground">Target Reps</p>
+                  <p className="text-2xl font-bold text-foreground">{currentExercise.reps}</p>
                 </div>
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-600">Rest Time</p>
-                  <p className="text-2xl font-bold">{currentExercise.restTime}s</p>
+                <div className="text-center p-4 bg-muted/50 rounded-lg border border-border/30">
+                  <p className="text-sm text-muted-foreground">Rest Time</p>
+                  <p className="text-2xl font-bold text-foreground">{currentExercise.restTime}s</p>
                 </div>
               </div>
 
               <div className="space-y-4 mb-6">
                 <div>
-                  <Label htmlFor="reps">Actual Reps Completed</Label>
+                  <Label htmlFor="reps" className="text-foreground">
+                    Actual Reps Completed
+                  </Label>
                   <Input
                     id="reps"
                     type="number"
                     placeholder={`Target: ${currentExercise.reps}`}
                     value={actualReps}
                     onChange={(e) => setActualReps(e.target.value)}
+                    className="bg-background border-border"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="weight">Weight Used (optional)</Label>
+                  <Label htmlFor="weight" className="text-foreground">
+                    Weight Used (optional)
+                  </Label>
                   <Input
                     id="weight"
                     placeholder="e.g., 50 lbs, 20 kg, bodyweight"
                     value={actualWeight}
                     onChange={(e) => setActualWeight(e.target.value)}
+                    className="bg-background border-border"
                   />
                 </div>
               </div>
@@ -219,16 +225,19 @@ export default function WorkoutSession({ workout, onComplete, onExit }: WorkoutS
           </Card>
         )}
 
-        <Card>
+        <Card className="border-border/50 shadow-lg">
           <CardHeader>
-            <CardTitle className="text-lg">Upcoming Exercises</CardTitle>
+            <CardTitle className="text-lg text-foreground">Upcoming Exercises</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
               {workout.exercises.slice(currentExerciseIndex + 1, currentExerciseIndex + 4).map((exercise, idx) => (
-                <div key={idx} className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                  <span className="font-medium">{exercise.name}</span>
-                  <span className="text-sm text-gray-600">
+                <div
+                  key={idx}
+                  className="flex justify-between items-center p-2 bg-muted/50 rounded border border-border/30"
+                >
+                  <span className="font-medium text-foreground">{exercise.name}</span>
+                  <span className="text-sm text-muted-foreground">
                     {exercise.sets}x{exercise.reps}
                   </span>
                 </div>

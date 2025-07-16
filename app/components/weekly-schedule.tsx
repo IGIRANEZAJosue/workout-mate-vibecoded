@@ -22,15 +22,17 @@ export default function WeeklySchedule({ workoutPlan, onStartWorkout, progress }
 
   const getMuscleGroupColor = (muscleGroup: string) => {
     const colors = {
-      chest: "bg-red-100 text-red-800",
-      back: "bg-blue-100 text-blue-800",
-      legs: "bg-green-100 text-green-800",
-      shoulders: "bg-yellow-100 text-yellow-800",
-      arms: "bg-purple-100 text-purple-800",
-      cardio: "bg-orange-100 text-orange-800",
-      rest: "bg-gray-100 text-gray-800",
+      chest: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
+      back: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
+      legs: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
+      shoulders: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
+      arms: "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400",
+      cardio: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400",
+      rest: "bg-gray-100 text-gray-800 dark:bg-gray-800/50 dark:text-gray-400",
     }
-    return colors[muscleGroup as keyof typeof colors] || "bg-gray-100 text-gray-800"
+    return (
+      colors[muscleGroup as keyof typeof colors] || "bg-gray-100 text-gray-800 dark:bg-gray-800/50 dark:text-gray-400"
+    )
   }
 
   return (
@@ -41,10 +43,13 @@ export default function WeeklySchedule({ workoutPlan, onStartWorkout, progress }
         const isRestDay = workout.exercises.length === 0
 
         return (
-          <Card key={day} className={`relative ${isCompleted ? "ring-2 ring-green-500" : ""}`}>
+          <Card
+            key={day}
+            className={`relative border-border/50 hover:border-border transition-all duration-200 ${isCompleted ? "ring-2 ring-green-500/50" : ""}`}
+          >
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg">{dayNames[index]}</CardTitle>
+                <CardTitle className="text-lg text-foreground">{dayNames[index]}</CardTitle>
                 {isCompleted && <CheckCircle className="h-5 w-5 text-green-500" />}
               </div>
               <Badge variant="secondary" className={getMuscleGroupColor(workout.muscleGroup)}>
@@ -52,16 +57,16 @@ export default function WeeklySchedule({ workoutPlan, onStartWorkout, progress }
               </Badge>
             </CardHeader>
             <CardContent>
-              <h3 className="font-semibold mb-3">{workout.name}</h3>
+              <h3 className="font-semibold mb-3 text-foreground">{workout.name}</h3>
 
               {!isRestDay ? (
                 <>
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center text-sm text-gray-600">
+                    <div className="flex items-center text-sm text-muted-foreground">
                       <Dumbbell className="h-4 w-4 mr-2" />
                       {workout.exercises.length} exercises
                     </div>
-                    <div className="flex items-center text-sm text-gray-600">
+                    <div className="flex items-center text-sm text-muted-foreground">
                       <Clock className="h-4 w-4 mr-2" />
                       {workout.totalDuration} minutes
                     </div>
@@ -69,12 +74,14 @@ export default function WeeklySchedule({ workoutPlan, onStartWorkout, progress }
 
                   <div className="space-y-1 mb-4">
                     {workout.exercises.slice(0, 3).map((exercise, idx) => (
-                      <div key={idx} className="text-xs text-gray-500">
+                      <div key={idx} className="text-xs text-muted-foreground">
                         • {exercise.name} ({exercise.sets}x{exercise.reps})
                       </div>
                     ))}
                     {workout.exercises.length > 3 && (
-                      <div className="text-xs text-gray-400">+{workout.exercises.length - 3} more exercises</div>
+                      <div className="text-xs text-muted-foreground/70">
+                        +{workout.exercises.length - 3} more exercises
+                      </div>
                     )}
                   </div>
 
@@ -89,9 +96,9 @@ export default function WeeklySchedule({ workoutPlan, onStartWorkout, progress }
                 </>
               ) : (
                 <div className="text-center py-8">
-                  <div className="text-gray-400 mb-2">🛌</div>
-                  <p className="text-sm text-gray-500">Recovery day</p>
-                  <p className="text-xs text-gray-400 mt-1">Rest and recover</p>
+                  <div className="text-4xl mb-2">🛌</div>
+                  <p className="text-sm text-muted-foreground font-medium">Recovery day</p>
+                  <p className="text-xs text-muted-foreground mt-1">Rest and recover</p>
                 </div>
               )}
             </CardContent>

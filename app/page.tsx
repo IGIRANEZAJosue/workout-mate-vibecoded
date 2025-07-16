@@ -12,6 +12,7 @@ import WorkoutSession from "./components/workout-session"
 import ProgressTracker from "./components/progress-tracker"
 import SettingsPanel from "./components/settings-panel"
 import type { WorkoutPlan, UserSettings, WorkoutProgress } from "./types/workout"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 const defaultSettings: UserSettings = {
   fitnessLevel: "intermediate",
@@ -166,24 +167,29 @@ export default function WorkoutScheduler() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800 p-4 transition-colors duration-300">
       <div className="max-w-6xl mx-auto">
         <header className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Workout Scheduler</h1>
-          <p className="text-gray-600">Your personalized fitness journey starts here</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold text-foreground mb-2">Workout Scheduler</h1>
+              <p className="text-muted-foreground">Your personalized fitness journey starts here</p>
+            </div>
+            <ThemeToggle />
+          </div>
         </header>
 
         {/* Weekly Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <Card>
+          <Card className="border-border/50 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">This Week</p>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <p className="text-sm font-medium text-muted-foreground">This Week</p>
+                  <p className="text-2xl font-bold text-foreground">
                     {stats.workoutsCompleted}/{stats.weeklyGoal}
                   </p>
-                  <p className="text-sm text-gray-500">Workouts completed</p>
+                  <p className="text-sm text-muted-foreground">Workouts completed</p>
                 </div>
                 <CheckCircle className="h-8 w-8 text-green-500" />
               </div>
@@ -191,26 +197,26 @@ export default function WorkoutScheduler() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border-border/50 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Total Time</p>
-                  <p className="text-2xl font-bold text-gray-900">{stats.totalDuration}m</p>
-                  <p className="text-sm text-gray-500">This week</p>
+                  <p className="text-sm font-medium text-muted-foreground">Total Time</p>
+                  <p className="text-2xl font-bold text-foreground">{stats.totalDuration}m</p>
+                  <p className="text-sm text-muted-foreground">This week</p>
                 </div>
                 <Dumbbell className="h-8 w-8 text-blue-500" />
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border-border/50 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Fitness Level</p>
-                  <p className="text-2xl font-bold text-gray-900 capitalize">{userSettings.fitnessLevel}</p>
-                  <p className="text-sm text-gray-500">Current level</p>
+                  <p className="text-sm font-medium text-muted-foreground">Fitness Level</p>
+                  <p className="text-2xl font-bold text-foreground capitalize">{userSettings.fitnessLevel}</p>
+                  <p className="text-sm text-muted-foreground">Current level</p>
                 </div>
                 <TrendingUp className="h-8 w-8 text-purple-500" />
               </div>
@@ -219,20 +225,32 @@ export default function WorkoutScheduler() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="schedule" className="flex items-center gap-2">
+          <TabsList className="grid w-full grid-cols-4 bg-muted/50">
+            <TabsTrigger
+              value="schedule"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground"
+            >
               <Calendar className="h-4 w-4" />
               Schedule
             </TabsTrigger>
-            <TabsTrigger value="progress" className="flex items-center gap-2">
+            <TabsTrigger
+              value="progress"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground"
+            >
               <TrendingUp className="h-4 w-4" />
               Progress
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2">
+            <TabsTrigger
+              value="settings"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground"
+            >
               <Settings className="h-4 w-4" />
               Settings
             </TabsTrigger>
-            <TabsTrigger value="workout" className="flex items-center gap-2">
+            <TabsTrigger
+              value="workout"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground"
+            >
               <Play className="h-4 w-4" />
               Quick Start
             </TabsTrigger>
@@ -256,9 +274,9 @@ export default function WorkoutScheduler() {
           </TabsContent>
 
           <TabsContent value="workout" className="mt-6">
-            <Card>
+            <Card className="border-border/50 shadow-lg">
               <CardHeader>
-                <CardTitle>Quick Start Workout</CardTitle>
+                <CardTitle className="text-foreground">Quick Start Workout</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -270,18 +288,21 @@ export default function WorkoutScheduler() {
                     )
 
                     return (
-                      <Card key={day} className="relative">
+                      <Card key={day} className="relative border-border/50 hover:border-border transition-colors">
                         <CardContent className="p-4">
                           <div className="flex items-center justify-between mb-2">
-                            <h3 className="font-semibold capitalize">{day}</h3>
+                            <h3 className="font-semibold capitalize text-foreground">{day}</h3>
                             {isCompleted && (
-                              <Badge variant="secondary" className="bg-green-100 text-green-800">
+                              <Badge
+                                variant="secondary"
+                                className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                              >
                                 Completed
                               </Badge>
                             )}
                           </div>
-                          <p className="text-sm text-gray-600 mb-3">{workout.name}</p>
-                          <p className="text-xs text-gray-500 mb-3">
+                          <p className="text-sm text-muted-foreground mb-3">{workout.name}</p>
+                          <p className="text-xs text-muted-foreground mb-3">
                             {workout.exercises.length} exercises • {workout.totalDuration}min
                           </p>
                           <Button
