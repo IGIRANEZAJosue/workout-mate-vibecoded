@@ -1,8 +1,12 @@
 # Workout scheduler app
 
+## Access the app here 
+https://v0-workout-scheduler-app.vercel.app
+___
+
 *Automatically synced with your [v0.dev](https://v0.dev) deployments*
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/igiranezajosues-projects/v0-workout-scheduler-app)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://v0-workout-scheduler-app.vercel.app/)
 [![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/2nRwJe8mnP0)
 
 ## Overview
@@ -14,7 +18,7 @@ Any changes you make to your deployed app will be automatically pushed to this r
 
 Your project is live at:
 
-**[https://vercel.com/igiranezajosues-projects/v0-workout-scheduler-app](https://vercel.com/igiranezajosues-projects/v0-workout-scheduler-app)**
+**[https://v0-workout-scheduler-app.vercel.app/](https://v0-workout-scheduler-app.vercel.app/)**
 
 ## Build your app
 
